@@ -11,6 +11,11 @@
     so it knows where the HTML audio is defined. In my HTML, it's in a audio tag with the class "player"
     and so it is selected through jQuery via the selector: $(".player")   (single quotes are fine too)*/
     var player = new AudioController($('.player'));
+    /*this next bit setups up an event listener for when the player has finished loading the file
+    and is ready to play (See HTML5 Audio/Video DOM Reference, http://www.w3schools.com/tags/ref_av_dom.asp).*/
+    player.oncanplay = function () {
+        alert("the song file is ready");
+    };
 
     /*this sets up our click handler. To handle an event happening to a HTML object
     you select the object and then add the handler to it by:
@@ -22,15 +27,12 @@
     */
     $("#button").click(function () {
         /*We use an if statement to either play or pause the music depending on
-        whether it's playing already or not. This information is tracked for you via
-        the audioController addon code.
+        whether it's playing already or not. This information is tracked via the WebAudio API
+        and can be queried.
 
-        audioController has 4 methods (functions you can use)
-        play() -> plays the sound in the <audio> tag
-        pause() -> pauses the sound in the <audio> tag assuming it is still playing
-                            (nothing happens if it's done playing)
-        playing() -> returns a value of true if the <audio> tag is playing
-        paused() -> returns a value of faluse if the <audio> tag is paused.
+        The entire list of things you can do to an audio tag are available here:
+        http://www.w3schools.com/tags/ref_av_dom.asp
+
 
         If statements can be given a bit of shorthand. For true/false values, saying
         if(bla) means "if bla is true"
@@ -50,7 +52,9 @@
 
         Simply put, () in JavaScript means "run this now and then keep running the rest of the program"
         */
-        if (player.playing()) {
+        //In 'real' HTML5 paused is a property value (variable) not a function like I set it up earlier.
+        //This way is probably better.
+        if (!player.paused) {
             player.pause();
         } else {
             player.play();
