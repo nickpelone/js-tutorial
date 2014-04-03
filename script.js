@@ -1,4 +1,5 @@
 /* jshint browser:true, devel:true, jquery:true */
+/* global AudioController */
 
 //consider the first and last lines like the opening and closing <html> tags, but for javascript
 (function () {
